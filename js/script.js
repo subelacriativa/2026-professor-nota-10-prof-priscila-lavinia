@@ -307,6 +307,7 @@ btnComecar.addEventListener(
     }
 );
 
+
 /* ==========================================================
 código abaixo para o audio diminuir em fade out de 2 segundos após clicar em p´lay do vídeo
 ========================================================== */
@@ -352,6 +353,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, intervalo);
     }
 });
+
+
 
 
 /* ==========================================================
