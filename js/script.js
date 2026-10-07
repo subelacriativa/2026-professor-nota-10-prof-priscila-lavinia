@@ -308,6 +308,53 @@ btnComecar.addEventListener(
 );
 
 /* ==========================================================
+código abaixo para o audio diminuir em fade out de 2 segundos após clicar em p´lay do vídeo
+========================================================== */
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const audioFundo = document.getElementById('audioFundo');
+    const videoHomenagem = document.getElementById('videoHomenagem');
+
+    if (videoHomenagem && audioFundo) {
+        // Monitora quando o usuário dá play no vídeo
+        videoHomenagem.addEventListener('play', () => {
+            fazerFadeOutAudio(audioFundo, 2000); // 2000ms = 2 segundos
+        });
+    }
+
+    /**
+     * Função para aplicar Fade-Out progressivo em um elemento de áudio
+     * @param {HTMLAudioElement} audio - Elemento de áudio
+     * @param {number} duracaoMs - Duração do fade-out em milissegundos
+     */
+    function fazerFadeOutAudio(audio, duracaoMs) {
+        // Se o áudio já estiver pausado ou sem som, não faz nada
+        if (audio.paused || audio.volume === 0) return;
+
+        const volumeInicial = audio.volume;
+        const intervalo = 50; // Atualiza o volume a cada 50ms
+        const passos = duracaoMs / intervalo;
+        const decrementoVolume = volumeInicial / passos;
+
+        const timerFade = setInterval(() => {
+            if (audio.volume > decrementoVolume) {
+                audio.volume -= decrementoVolume;
+            } else {
+                // Quando o volume chega próximo de zero:
+                audio.volume = 0;
+                audio.pause();
+                clearInterval(timerFade);
+                
+                // Opcional: restaura o volume original para caso o jogo seja reiniciado
+                audio.volume = volumeInicial; 
+            }
+        }, intervalo);
+    }
+});
+
+
+/* ==========================================================
    CARREGAR PERGUNTA
 ========================================================== */
 
